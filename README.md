@@ -10,13 +10,7 @@ This system is a classic example of **chaotic motion**, where tiny changes in in
 👉 Add your video here (replace the link):
 
 ```
-https://github.com/your-username/your-repo/assets/demo.mp4
-```
-
-Or embed:
-
-```
-![Demo](path/to/your/video.gif)
+https://github.com/user-attachments/assets/3170431e-8984-4c67-a07b-23f1587ae1cc
 ```
 
 ---
