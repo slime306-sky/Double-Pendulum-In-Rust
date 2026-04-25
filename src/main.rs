@@ -9,7 +9,7 @@ const LINE_THICKENESS: f32 = 4.0;
 const L1: f32 = 250.0;
 const L2: f32 = 200.0;
 
-const G: f32 = 1.0;
+const G: f32 = 1000.0;
 const M1: f32 = 1.0;
 const M2: f32 = 1.0;
 
@@ -31,7 +31,7 @@ fn draw_double_pendulum(start: Vector2, phi1: f32, phi2: f32, l1: f32, l2: f32, 
     draw_pendulum(l1, start, phi1, d);
 }
 
-fn step(phi1: &mut f32, phi2: &mut f32, phi1_d: &mut f32, phi2_d: &mut f32){
+fn step(phi1: &mut f32, phi2: &mut f32, phi1_d: &mut f32, phi2_d: &mut f32, dt: f32){
     let num1 =
         -G * (2.0 * M1 + M2) * (*phi1).sin()
         - M2 * G * (*phi1 - 2.0 * *phi2).sin()
@@ -64,11 +64,11 @@ fn step(phi1: &mut f32, phi2: &mut f32, phi1_d: &mut f32, phi2_d: &mut f32){
     let phi1_dd = num1 / den1;
     let phi2_dd = num2 / den2;
 
-    *phi1_d += phi1_dd;
-    *phi2_d += phi2_dd;
+    *phi1_d += phi1_dd * dt;
+    *phi2_d += phi2_dd * dt;
 
-    *phi1 += *phi1_d;
-    *phi2 += *phi2_d;
+    *phi1 += *phi1_d * dt;
+    *phi2 += *phi2_d * dt;
 }
 
 fn main() {
@@ -79,20 +79,26 @@ fn main() {
 
     let start = Vector2::new((WIDTH/2) as f32, 0.0);
 
-    rl.set_target_fps(60);
+    // rl.set_target_fps(60);
 
     let mut phi1 = 80.0;
     let mut phi2 = -80.0;
     let mut phi1_d = 0.0;
     let mut phi2_d = 0.0;
-
+    
     while !rl.window_should_close() {
+        let dt = rl.get_frame_time(); 
+        let fps = rl.get_fps();
         let mut d = rl.begin_drawing(&thread);
 
-        step(&mut phi1, &mut phi2, &mut phi1_d, &mut phi2_d);
+        step(&mut phi1, &mut phi2, &mut phi1_d, &mut phi2_d, dt);
 
         d.clear_background(Color::BLACK);
+
+
         d.draw_text("DOUBLE PENDULUM SIMULATION", 10, 10, 10, Color::WHITE);
+        d.draw_text(&format!("FPS: {}", fps), 20, 20, 20, Color::WHITE);
+        
         draw_double_pendulum(start, phi1, phi2, L1, L2, &mut d);
     }
 }
