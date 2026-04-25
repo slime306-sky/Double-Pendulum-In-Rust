@@ -7,7 +7,7 @@ This system is a classic example of **chaotic motion**, where tiny changes in in
 
 ## 🎥 Demo
 
-https://github.com/user-attachments/assets/3170431e-8984-4c67-a07b-23f1587ae1cc
+https://github.com/user-attachments/assets/4de161b9-6a79-40cf-979a-b351450cc663
 
 ---
 
